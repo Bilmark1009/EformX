@@ -25,96 +25,98 @@ const RegisterForm = () => {
 
     return (
         <div className="w-full">
-            <h2 className="text-3xl font-extrabold text-center mb-8 bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">Create your Account</h2>
+            <h2 className="text-xl font-black text-white mb-8 tracking-tight flex items-center gap-3">
+                <div className="w-1.5 h-6 bg-primary-500 rounded-full"></div>
+                Profile Initialization
+            </h2>
 
             {error && (
-                <div className="bg-rose-50 border border-rose-100 text-rose-600 px-4 py-3 rounded-xl mb-6 text-sm font-bold flex items-center">
-                    <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                    {error}
+                <div className="bg-rose-500/10 border-l-2 border-rose-500 text-rose-400 px-4 py-3 rounded-r-xl mb-8 text-xs font-bold font-mono uppercase tracking-tight">
+                    System Alert: {error}
                 </div>
             )}
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 gap-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+                <div className="space-y-6">
                     <div>
-                        <label className="block text-sm font-bold text-slate-700 mb-1.5 ml-1">Full Name</label>
+                        <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 font-mono ml-1">Full Name</label>
                         <input
                             {...register('name', { required: 'Name is required' })}
                             type="text"
-                            className={`input-field ${errors.name ? 'border-rose-500 focus:ring-rose-100' : ''}`}
-                            placeholder="John Doe"
+                            className={`input-field !py-4 font-mono font-bold !text-sm ${errors.name ? 'border-rose-500 focus:ring-rose-500/20' : ''}`}
+                            placeholder="OPERATOR_NAME"
                         />
-                        {errors.name && <p className="mt-1.5 text-xs font-bold text-rose-500 ml-1 uppercase letter-spacing-wide">{errors.name.message}</p>}
+                        {errors.name && <p className="mt-2 text-[9px] font-black text-rose-500 ml-1 uppercase tracking-widest font-mono">{errors.name.message}</p>}
                     </div>
 
                     <div>
-                        <label className="block text-sm font-bold text-slate-700 mb-1.5 ml-1">Email Address</label>
+                        <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 font-mono ml-1">Identity Probe (Email)</label>
                         <input
                             {...register('email', {
                                 required: 'Email is required',
                                 pattern: { value: /^\S+@\S+$/i, message: 'Invalid email format' }
                             })}
                             type="email"
-                            className={`input-field ${errors.email ? 'border-rose-500 focus:ring-rose-100' : ''}`}
-                            placeholder="name@company.com"
+                            className={`input-field !py-4 font-mono font-bold !text-sm ${errors.email ? 'border-rose-500 focus:ring-rose-500/20' : ''}`}
+                            placeholder="admin@eformx.sys"
                         />
-                        {errors.email && <p className="mt-1.5 text-xs font-bold text-rose-500 ml-1 uppercase letter-spacing-wide">{errors.email.message}</p>}
+                        {errors.email && <p className="mt-2 text-[9px] font-black text-rose-500 ml-1 uppercase tracking-widest font-mono">{errors.email.message}</p>}
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-1.5 ml-1">Password</label>
+                            <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 font-mono ml-1">Access Pass</label>
                             <input
                                 {...register('password', {
                                     required: 'Password is required',
-                                    minLength: { value: 8, message: 'Min 8 characters' }
+                                    minLength: { value: 8, message: 'Min 8 chars' }
                                 })}
                                 type="password"
-                                className={`input-field ${errors.password ? 'border-rose-500 focus:ring-rose-100' : ''}`}
+                                className={`input-field !py-4 font-mono font-bold !text-sm ${errors.password ? 'border-rose-500 focus:ring-rose-500/20' : ''}`}
                                 placeholder="••••••••"
                             />
-                            {errors.password && <p className="mt-1.5 text-xs font-bold text-rose-500 ml-1 uppercase letter-spacing-wide">{errors.password.message}</p>}
+                            {errors.password && <p className="mt-2 text-[9px] font-black text-rose-500 ml-1 uppercase tracking-widest font-mono">{errors.password.message}</p>}
                         </div>
                         <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-1.5 ml-1">Confirm</label>
+                            <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 font-mono ml-1">Verification</label>
                             <input
                                 {...register('password_confirmation', {
                                     required: 'Confirm is required',
-                                    validate: (val) => watch('password') === val || 'Passwords mismatch'
+                                    validate: (val) => watch('password') === val || 'Mismatch'
                                 })}
                                 type="password"
-                                className={`input-field ${errors.password_confirmation ? 'border-rose-500 focus:ring-rose-100' : ''}`}
+                                className={`input-field !py-4 font-mono font-bold !text-sm ${errors.password_confirmation ? 'border-rose-500 focus:ring-rose-500/20' : ''}`}
                                 placeholder="••••••••"
                             />
-                            {errors.password_confirmation && <p className="mt-1.5 text-xs font-bold text-rose-500 ml-1 uppercase letter-spacing-wide">{errors.password_confirmation.message}</p>}
+                            {errors.password_confirmation && <p className="mt-2 text-[9px] font-black text-rose-500 ml-1 uppercase tracking-widest font-mono">{errors.password_confirmation.message}</p>}
                         </div>
                     </div>
                 </div>
 
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="btn-primary w-full mt-8"
-                >
-                    {loading ? (
-                        <div className="flex items-center justify-center">
-                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            Creating Account...
-                        </div>
-                    ) : 'Register Workspace'}
-                </button>
+                <div className="pt-4">
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="btn-primary w-full !rounded-xl !py-4 !text-[11px] font-black uppercase tracking-[0.2em] shadow-glow"
+                    >
+                        {loading ? (
+                            <div className="flex items-center justify-center font-mono">
+                                <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Finalizing Profile...
+                            </div>
+                        ) : 'Initialize Account'}
+                    </button>
+                </div>
             </form>
 
-            <div className="mt-8 text-center">
-                <p className="text-sm text-slate-500 font-medium tracking-tight">
-                    Already an eFormX member?{' '}
-                    <Link to="/login" className="text-primary-600 font-bold hover:text-primary-700 transition-colors">
-                        Sign In
+            <div className="mt-10 pt-8 border-t border-slate-800/50 text-center">
+                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono">
+                    Existing Operator?{' '}
+                    <Link to="/login" className="text-primary-500 hover:text-primary-400 transition-colors">
+                        Re-authenticate
                     </Link>
                 </p>
             </div>
@@ -123,3 +125,4 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
+

@@ -55,43 +55,55 @@ const Dashboard = () => {
 
     return (
         <DashboardLayout>
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-                <div>
-                    <h1 className="text-4xl font-extrabold mb-2 bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">
-                        My Workspace
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16 relative">
+                <div className="relative">
+                    <div className="absolute -left-4 top-0 bottom-0 w-1 bg-primary-500/50 rounded-full"></div>
+                    <div className="flex items-center gap-3 mb-2">
+                        <span className="text-[10px] font-bold font-mono tracking-[0.2em] text-primary-500 uppercase">System Intelligence</span>
+                        <div className="h-[1px] w-12 bg-primary-500/30"></div>
+                    </div>
+                    <h1 className="text-5xl font-black tracking-tighter text-white font-display">
+                        My <span className="text-primary-500">Workspace</span>
                     </h1>
-                    <p className="text-slate-500 font-medium tracking-tight">Manage and build your eFormX collection</p>
+                    <p className="text-slate-500 font-medium mt-2 max-w-md leading-relaxed">
+                        Orchestrate your data collection infrastructure and monitor telemetry in real-time.
+                    </p>
                 </div>
-                <div className="flex items-center space-x-4">
-                    <div className="relative group">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg className="h-5 w-5 text-slate-400 group-focus-within:text-primary-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                    <div className="relative group w-full sm:w-auto">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <svg className="h-4 w-4 text-slate-500 group-focus-within:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                         </div>
                         <input
                             type="text"
-                            placeholder="Find a form..."
-                            className="input-field !pl-10 !py-2.5 w-64 glass shadow-none hover:border-slate-300 focus:glass"
+                            placeholder="Query system modules..."
+                            className="input-field !pl-11 !py-3 w-full sm:w-72 glass !bg-slate-900/40 border-slate-800 text-sm font-mono tracking-tight focus:border-primary-500/50"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="btn-primary flex items-center"
+                        className="btn-primary w-full sm:w-auto !rounded-xl !px-8 shadow-glow hover:shadow-glow-lg transition-all"
                     >
-                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
-                        New Form
+                        Deploy Module
                     </button>
                 </div>
             </div>
 
             {loading ? (
-                <div className="flex justify-center py-32">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+                <div className="flex flex-col items-center justify-center py-32 space-y-4">
+                    <div className="relative w-16 h-16">
+                        <div className="absolute inset-0 border-4 border-primary-500/20 rounded-full"></div>
+                        <div className="absolute inset-0 border-4 border-primary-500 rounded-full border-t-transparent animate-spin"></div>
+                    </div>
+                    <span className="text-xs font-bold font-mono text-primary-500 animate-pulse tracking-widest uppercase">Initialising Core...</span>
                 </div>
             ) : filteredForms.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -100,22 +112,26 @@ const Dashboard = () => {
                     ))}
                 </div>
             ) : (
-                <div className="glass-card text-center py-24 animate-float">
-                    <div className="bg-primary-50 text-primary-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner">
-                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                <div className="glass-card text-center py-28 relative overflow-hidden group">
+                    <div className="scanline"></div>
+                    <div className="bg-primary-500/5 text-primary-500 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-primary-500/10 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                         </svg>
                     </div>
-                    <h3 className="text-2xl font-extrabold text-slate-900 mb-2">No forms created yet</h3>
-                    <p className="text-slate-500 mb-8 max-w-sm mx-auto font-medium">Capture voices and scale your ideas with beautiful forms.</p>
+                    <h3 className="text-3xl font-black text-white mb-3 tracking-tight">No Active Modules</h3>
+                    <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium leading-relaxed">
+                        Database indicates zero deployed forms. Protocol suggests immediate creation of a data collection node.
+                    </p>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="btn-primary"
+                        className="btn-primary !px-10 !rounded-xl"
                     >
-                        Create Your First Form
+                        Initialize First Module
                     </button>
                 </div>
             )}
+
 
             <Modal
                 isOpen={isModalOpen}

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,81 +6,120 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased;
-    background-image: 
-      radial-gradient(at 0% 0%, hsla(253,16%,7%,0.03) 0, transparent 50%), 
-      radial-gradient(at 50% 0%, hsla(225,39%,30%,0.03) 0, transparent 50%), 
-      radial-gradient(at 100% 0%, hsla(339,49%,30%,0.03) 0, transparent 50%);
+    @apply bg-slate-950 text-slate-300 font-sans antialiased;
+    background-image:
+      radial-gradient(at 0% 0%, hsla(200, 100%, 50%, 0.1) 0, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(280, 100%, 50%, 0.1) 0, transparent 50%),
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-tight text-slate-900;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display tracking-tight text-white;
   }
 }
 
 @layer components {
-  /* Glassmorphism primitives */
+
+  /* Tech-Glass Essentials */
   .glass {
-    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-xl;
+    @apply bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-2xl;
   }
 
   .glass-card {
-    @apply bg-white/80 backdrop-blur-lg border border-slate-200/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300;
+    @apply bg-slate-900/60 backdrop-blur-2xl border border-slate-800 rounded-3xl p-6 shadow-xl hover:border-primary-500/50 hover:shadow-primary-500/10 transition-all duration-500;
   }
 
-  /* Premium Buttons */
+  .tech-border {
+    @apply border border-slate-800 relative overflow-hidden;
+  }
+
+  .tech-border::after {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary-400 to-transparent opacity-30;
+  }
+
+  /* Professional Tech Buttons */
   .btn-primary {
-    @apply bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 
-           text-white font-semibold py-2.5 px-5 rounded-xl transition-all duration-300 transform hover:-translate-y-0.5 
-           shadow-lg shadow-primary-500/20 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-primary-600 hover:bg-primary-500 text-white font-bold py-2.5 px-6 rounded-2xl transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg shadow-primary-500/20 active:scale-95 border border-primary-400/30 flex items-center justify-center gap-2;
   }
-  
+
   .btn-secondary {
-    @apply bg-white hover:bg-slate-50 text-slate-700 font-semibold py-2.5 px-5 rounded-xl border border-slate-200 
-           transition-all duration-300 shadow-sm active:scale-95;
+    @apply bg-slate-900 text-slate-300 font-semibold py-2.5 px-6 rounded-2xl border border-slate-800 hover:bg-slate-800 hover:border-slate-700 transition-all duration-300 shadow-sm active:scale-95 flex items-center justify-center gap-2;
   }
-  
+
   .btn-danger {
-    @apply bg-rose-500 hover:bg-rose-600 text-white font-semibold py-2.5 px-5 rounded-xl transition-all duration-300 
-           shadow-lg shadow-rose-500/20 active:scale-95;
+    @apply bg-rose-950/20 hover:bg-rose-900/40 text-rose-400 font-semibold py-2.5 px-6 rounded-2xl border border-rose-500/30 transition-all duration-300 shadow-lg shadow-rose-900/10 active:scale-95 flex items-center justify-center gap-2;
   }
-  
+
   /* Inputs */
   .input-field {
-    @apply w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-100 
-           focus:border-primary-400 transition-all duration-300 placeholder:text-slate-400;
+    @apply w-full px-4 py-3 bg-slate-900/80 border border-slate-800 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 transition-all duration-300 placeholder:text-slate-600 font-medium;
   }
-  
+
   /* Indicators */
   .badge {
-    @apply inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold tracking-wider uppercase;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase font-mono;
   }
-  
+
   .badge-success {
-    @apply bg-emerald-50 text-emerald-700 border border-emerald-100;
+    @apply bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-[0_0_10px_rgba(52,211,153,0.1)];
   }
-  
+
   .badge-warning {
-    @apply bg-amber-50 text-amber-700 border border-amber-100;
+    @apply bg-amber-500/10 text-amber-400 border border-amber-500/20;
   }
-  
+
   .badge-danger {
-    @apply bg-rose-50 text-rose-700 border border-rose-100;
+    @apply bg-rose-500/10 text-rose-400 border border-rose-500/20;
   }
 
-  /* Layout containers */
+  /* Layout */
   .dashboard-container {
-    @apply max-w-7xl mx-auto px-6 lg:px-8 py-10;
+    @apply max-w-7xl mx-auto px-6 lg:px-10 py-12;
   }
 }
 
-/* Animations */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+/* Custom Animations */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+.scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(14, 165, 233, 0.4), transparent);
+  animation: scanline 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
 }

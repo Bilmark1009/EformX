@@ -11,31 +11,37 @@ const fieldTypes = [
 
 const FieldTypeSelector = ({ onSelect }) => {
     return (
-        <div className="bg-white p-4 border rounded-lg">
-            <h3 className="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wider">
-                Add Fields
-            </h3>
-            <div className="grid grid-cols-1 gap-2">
-                {fieldTypes.map((field) => (
-                    <button
-                        key={field.type}
-                        onClick={() => onSelect(field.type)}
-                        className="flex items-center p-3 text-sm text-gray-700 rounded-lg hover:bg-primary-50 hover:text-primary-700 border border-transparent hover:border-primary-200 transition-all duration-200 group"
-                    >
+        <div className="grid grid-cols-1 gap-3">
+            {fieldTypes.map((field) => (
+                <button
+                    key={field.type}
+                    onClick={() => onSelect(field.type)}
+                    className="flex items-center p-4 !bg-slate-950/40 border border-slate-800/80 rounded-xl hover:border-primary-500/50 hover:bg-slate-900/60 transition-all duration-300 group text-left relative overflow-hidden"
+                >
+                    <div className="absolute inset-y-0 left-0 w-1 bg-primary-500/0 group-hover:bg-primary-500 transition-all"></div>
+                    <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center mr-4 group-hover:shadow-glow-sm group-hover:shadow-primary-500/20 group-hover:border-primary-500/30 transition-all">
                         <svg
-                            className="w-5 h-5 mr-3 text-gray-400 group-hover:text-primary-500"
+                            className="w-5 h-5 text-slate-500 group-hover:text-primary-500 transition-colors"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
                         >
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={field.icon} />
                         </svg>
-                        {field.label}
-                    </button>
-                ))}
-            </div>
+                    </div>
+                    <div>
+                        <div className="text-[10px] font-black text-slate-400 group-hover:text-white uppercase tracking-widest font-mono transition-colors">
+                            {field.label}
+                        </div>
+                        <div className="text-[8px] font-bold text-slate-600 uppercase tracking-tight font-mono leading-tight mt-0.5">
+                            INIT_MODULE_{field.type.toUpperCase()}
+                        </div>
+                    </div>
+                </button>
+            ))}
         </div>
     );
 };
 
 export default FieldTypeSelector;
+

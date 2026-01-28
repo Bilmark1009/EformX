@@ -5,12 +5,11 @@ const FieldRenderer = ({ field, register, errors, watch }) => {
     const fieldName = `field_${field.id}`;
     const error = errors[fieldName];
 
-    const containerClass = "mb-6";
-    const labelClass = "block text-base font-semibold text-gray-900 mb-2";
-    const inputClass = `w-full px-4 py-3 rounded-xl border transition-all duration-200 focus:ring-4 focus:ring-primary-100 outline-none ${error ? 'border-red-300 bg-red-50' : 'border-gray-200 focus:border-primary-500'
-        }`;
-    const helpClass = "mt-2 text-sm text-gray-500";
-    const errorClass = "mt-2 text-sm text-red-600 font-medium flex items-center";
+    const containerClass = "mb-8 group/field";
+    const labelClass = "block text-sm font-bold text-slate-400 mb-3 uppercase tracking-widest font-mono group-focus-within/field:text-primary-400 transition-colors";
+    const inputClass = `input-field ${error ? 'border-rose-500/50 bg-rose-500/5 focus:ring-rose-500/20 focus:border-rose-500' : ''}`;
+    const helpClass = "mt-3 text-[10px] text-slate-500 font-bold uppercase tracking-wider font-mono";
+    const errorClass = "mt-3 text-xs text-rose-400 font-bold flex items-center gap-2 font-mono uppercase tracking-tight";
 
     const renderInput = () => {
         switch (type) {
@@ -18,7 +17,7 @@ const FieldRenderer = ({ field, register, errors, watch }) => {
                 return (
                     <input
                         type="text"
-                        placeholder={config?.placeholder}
+                        placeholder={config?.placeholder || 'Awaiting input...'}
                         {...register(fieldName, { required: required && `${label} is required` })}
                         className={inputClass}
                     />
@@ -27,7 +26,7 @@ const FieldRenderer = ({ field, register, errors, watch }) => {
             case 'long_text':
                 return (
                     <textarea
-                        placeholder={config?.placeholder}
+                        placeholder={config?.placeholder || 'Enter detailed parameters...'}
                         rows={4}
                         {...register(fieldName, { required: required && `${label} is required` })}
                         className={`${inputClass} resize-none`}
@@ -38,13 +37,13 @@ const FieldRenderer = ({ field, register, errors, watch }) => {
                 return (
                     <input
                         type="number"
-                        placeholder={config?.placeholder}
+                        placeholder={config?.placeholder || '00.00'}
                         min={config?.min}
                         max={config?.max}
                         {...register(fieldName, {
                             required: required && `${label} is required`,
-                            min: config?.min && { value: config.min, message: `Minimum value is ${config.min}` },
-                            max: config?.max && { value: config.max, message: `Maximum value is ${config.max}` }
+                            min: config?.min && { value: config.min, message: `Minimum value: ${config.min}` },
+                            max: config?.max && { value: config.max, message: `Maximum value: ${config.max}` }
                         })}
                         className={inputClass}
                     />
@@ -52,31 +51,45 @@ const FieldRenderer = ({ field, register, errors, watch }) => {
 
             case 'dropdown':
                 return (
-                    <select
-                        {...register(fieldName, { required: required && `${label} is required` })}
-                        className={inputClass}
-                    >
-                        <option value="">Select an option</option>
-                        {config?.options?.map((option, idx) => (
-                            <option key={idx} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
+                    <div className="relative">
+                        <select
+                            {...register(fieldName, { required: required && `${label} is required` })}
+                            className={`${inputClass} appearance-none`}
+                        >
+                            <option value="">Select initialization vector</option>
+                            {config?.options?.map((option, idx) => (
+                                <option key={idx} value={option.value} className="bg-slate-900 text-white">
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
+                        <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
                 );
 
             case 'checkbox':
                 return (
-                    <div className="space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
                         {config?.options?.map((option, idx) => (
-                            <label key={idx} className="flex items-center group cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    value={option.value}
-                                    {...register(fieldName, { required: required && `Please select at least one option` })}
-                                    className="w-5 h-5 rounded border-gray-300 text-primary-600 focus:ring-primary-500 transition-all cursor-pointer"
-                                />
-                                <span className="ml-3 text-gray-700 group-hover:text-gray-900 transition-colors">
+                            <label key={idx} className="flex items-center group cursor-pointer bg-slate-900/40 border border-slate-800 p-4 rounded-2xl hover:border-primary-500/30 transition-all duration-300">
+                                <div className="relative flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        value={option.value}
+                                        {...register(fieldName, { required: required && `Please select at least one option` })}
+                                        className="peer w-6 h-6 rounded-lg opacity-0 absolute cursor-pointer"
+                                    />
+                                    <div className="w-6 h-6 border-2 border-slate-700 rounded-lg peer-checked:bg-primary-600 peer-checked:border-primary-600 transition-all flex items-center justify-center">
+                                        <svg className="w-4 h-4 text-white opacity-0 peer-checked:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <span className="ml-4 text-sm font-bold text-slate-400 group-hover:text-white transition-colors">
                                     {option.label}
                                 </span>
                             </label>
@@ -90,39 +103,42 @@ const FieldRenderer = ({ field, register, errors, watch }) => {
                         <input
                             type="file"
                             {...register(fieldName, { required: required && `${label} is required` })}
-                            className="block w-full text-sm text-gray-500
-                                file:mr-4 file:py-2.5 file:px-4
-                                file:rounded-lg file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-primary-50 file:text-primary-700
-                                hover:file:bg-primary-100
-                                cursor-pointer"
+                            className="block w-full text-xs text-slate-500 font-mono
+                                file:mr-6 file:py-3 file:px-6
+                                file:rounded-xl file:border-0
+                                file:text-[10px] file:font-black file:uppercase file:tracking-widest
+                                file:bg-primary-600 file:text-white
+                                hover:file:bg-primary-500
+                                cursor-pointer bg-slate-900/40 border border-slate-800 rounded-2xl"
                         />
                     </div>
                 );
 
             default:
-                return <p className="text-red-500 italic">Unsupported field type: {type}</p>;
+                return <p className="text-rose-500 italic font-mono uppercase text-xs">Error: Unsupported Protocol Type: {type}</p>;
         }
     };
 
     return (
         <div className={containerClass}>
-            <label className={labelClass}>
-                {label}
-                {required && <span className="text-red-500 ml-1">*</span>}
-            </label>
+            <div className="flex items-center justify-between mb-1">
+                <label className={labelClass}>
+                    {label}
+                    {required && <span className="text-primary-500 ml-1.5">•</span>}
+                </label>
+                {required && <span className="text-[9px] font-black text-primary-500/50 uppercase tracking-widest font-mono">Required</span>}
+            </div>
 
             {renderInput()}
 
-            {config?.helpText && <p className={helpClass}>{config.helpText}</p>}
+            {config?.helpText && <p className={helpClass}>// {config.helpText}</p>}
 
             {error && (
                 <p className={errorClass}>
-                    <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
-                    {error.message}
+                    System Alert: {error.message}
                 </p>
             )}
         </div>
@@ -130,3 +146,4 @@ const FieldRenderer = ({ field, register, errors, watch }) => {
 };
 
 export default FieldRenderer;
+

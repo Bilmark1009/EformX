@@ -23,7 +23,7 @@ const PublicFormPage = () => {
                 setForm(response.data);
                 setLoading(false);
             } catch (err) {
-                setError(err.response?.data?.message || 'Form not found or no longer active.');
+                setError(err.response?.data?.message || 'Protocol Error: Node not found or decommissioned.');
                 setLoading(false);
             }
         };
@@ -34,7 +34,6 @@ const PublicFormPage = () => {
         setSubmitting(true);
         setError(null);
 
-        // Prepare FormData for file uploads
         const formData = new FormData();
 
         Object.keys(data).forEach(key => {
@@ -43,7 +42,6 @@ const PublicFormPage = () => {
                     formData.append(key, data[key][0]);
                 }
             } else if (Array.isArray(data[key])) {
-                // For checkboxes or multi-select
                 data[key].forEach(val => formData.append(`${key}[]`, val));
             } else {
                 formData.append(key, data[key]);
@@ -55,9 +53,9 @@ const PublicFormPage = () => {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setSubmitted(true);
-            addToast('Form submitted successfully!');
+            addToast('Data transmission successful.');
         } catch (err) {
-            const msg = err.response?.data?.message || 'Failed to submit form. Please try again.';
+            const msg = err.response?.data?.message || 'Transmission failed. Network interference detected.';
             setError(msg);
             addToast(msg, 'error');
         } finally {
@@ -67,28 +65,33 @@ const PublicFormPage = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+            <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4 space-y-4">
+                <div className="relative w-16 h-16">
+                    <div className="absolute inset-0 border-4 border-primary-500/10 rounded-full"></div>
+                    <div className="absolute inset-0 border-4 border-primary-500 rounded-full border-t-transparent animate-spin shadow-glow"></div>
+                </div>
+                <span className="text-[10px] font-bold font-mono text-primary-500 animate-pulse tracking-[0.3em] uppercase">Connecting to Node...</span>
             </div>
         );
     }
 
     if (error && !form) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-                <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-10 text-center">
-                    <div className="bg-red-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <svg className="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(15,23,42,0)_0%,rgba(2,6,23,1)_100%)]"></div>
+                <div className="max-w-md w-full glass-card tech-border !p-12 text-center relative z-10">
+                    <div className="bg-rose-500/10 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-rose-500/20 shadow-inner">
+                        <svg className="w-12 h-12 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-900 mb-2">Unavailable</h1>
-                    <p className="text-gray-500 mb-8">{error}</p>
+                    <h1 className="text-3xl font-black text-white mb-3 tracking-tight">Access Restricted</h1>
+                    <p className="text-slate-500 mb-10 font-medium leading-relaxed font-mono text-xs uppercase tracking-tight">{error}</p>
                     <button
                         onClick={() => window.location.reload()}
-                        className="btn-primary w-full"
+                        className="btn-primary w-full !rounded-xl"
                     >
-                        Try Again
+                        Re-initialize Probe
                     </button>
                 </div>
             </div>
@@ -97,25 +100,25 @@ const PublicFormPage = () => {
 
     if (submitted) {
         return (
-            <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-primary-100/30 rounded-full filter blur-3xl opacity-50"></div>
-                <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-cyan/10 rounded-full filter blur-3xl opacity-50"></div>
+            <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
+                <div className="scanline"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(14,165,233,0.05)_0%,rgba(2,6,23,0)_100%)]"></div>
 
-                <div className="max-w-md w-full glass-card !p-12 text-center rounded-[2.5rem] relative z-10 border-white/50 shadow-2xl">
-                    <div className="bg-emerald-50 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner shadow-emerald-200/50">
+                <div className="max-w-md w-full glass-card tech-border !p-12 text-center relative z-10">
+                    <div className="bg-emerald-500/10 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-emerald-500/20 shadow-glow shadow-emerald-500/20">
                         <svg className="w-12 h-12 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                     </div>
-                    <h1 className="text-4xl font-extrabold text-slate-900 mb-4 font-display">Success!</h1>
-                    <p className="text-slate-500 mb-10 font-medium leading-relaxed">Your response was captured with precision. We appreciate your time.</p>
+                    <h1 className="text-4xl font-black text-white mb-4 tracking-tighter">Transmission <span className="text-emerald-500">Complete</span></h1>
+                    <p className="text-slate-500 mb-10 font-medium leading-relaxed text-sm font-mono uppercase tracking-tight">Your data packet has been encrypted and successfully routed to the central core.</p>
                     <button
                         onClick={() => setSubmitted(false)}
-                        className="text-primary-600 font-bold hover:text-primary-700 transition-colors flex items-center justify-center mx-auto group"
+                        className="text-primary-500 font-black text-[10px] tracking-[0.3em] uppercase hover:text-primary-400 transition-all flex items-center justify-center mx-auto group"
                     >
-                        Submit another
-                        <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        Initialize New Upload
+                        <svg className="w-4 h-4 ml-3 group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
                     </button>
                 </div>
@@ -124,51 +127,56 @@ const PublicFormPage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-            {/* Immersive background elements */}
-            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-200/20 rounded-full filter blur-[120px] opacity-40 animate-pulse"></div>
-            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent-pink/10 rounded-full filter blur-[120px] opacity-40 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="min-h-screen bg-slate-950 py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+            <div className="scanline"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(14,165,233,0.07)_0%,rgba(2,6,23,0)_70%)]"></div>
 
             <div className="max-w-3xl mx-auto relative z-10">
-                <div className="glass shadow-2xl rounded-[3rem] overflow-hidden border-white/40">
-                    {/* Premium Form Header */}
-                    <div className="bg-gradient-to-r from-primary-600 via-primary-500 to-accent-cyan h-3"></div>
-                    <div className="p-10 sm:p-16 border-b border-slate-100/50 bg-white/40">
-                        <div className="flex items-center space-x-3 mb-6">
-                            <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-primary-400 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/20">
-                                <span className="text-white font-bold text-xl font-display italic">e</span>
+                <div className="glass-card !p-0 tech-border overflow-hidden">
+                    {/* Header */}
+                    <div className="p-10 sm:p-16 border-b border-slate-800/50 bg-slate-900/30">
+                        <div className="flex items-center space-x-3 mb-8">
+                            <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-glow shadow-primary-500/30">
+                                <span className="text-white font-black text-xl italic font-display">e</span>
                             </div>
-                            <span className="text-primary-600 font-bold uppercase tracking-[0.2em] text-xs">eFormX Premium</span>
+                            <div className="flex flex-col">
+                                <span className="text-primary-500 font-black uppercase tracking-[0.3em] text-[10px] font-mono leading-none">Protocol Active</span>
+                                <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest font-mono">eFormX Cryptographic Node</span>
+                            </div>
                         </div>
-                        <h1 className="text-5xl font-black text-slate-900 mb-6 tracking-tight leading-tight">
+                        <h1 className="text-5xl font-black text-white mb-6 tracking-tighter leading-[0.9]">
                             {form.title}
                         </h1>
                         {form.description && (
-                            <p className="text-xl text-slate-500 leading-relaxed font-medium max-w-2xl">
+                            <p className="text-lg text-slate-500 leading-relaxed font-medium max-w-2xl">
                                 {form.description}
                             </p>
                         )}
                     </div>
 
                     {/* Interactive Form Fields */}
-                    <form onSubmit={handleSubmit(onSubmit)} className="p-10 sm:p-16 space-y-12 bg-white/20">
+                    <form onSubmit={handleSubmit(onSubmit)} className="p-10 sm:p-16 space-y-12">
                         {error && (
-                            <div className="bg-rose-50/80 backdrop-blur border-l-4 border-rose-500 p-6 rounded-r-2xl mb-12 flex items-start">
+                            <div className="bg-rose-500/10 border-l-4 border-rose-500 p-6 rounded-r-2xl mb-12 flex items-start tech-border !border-t-0 !border-b-0 !border-r-0">
                                 <div className="flex-shrink-0 mt-0.5">
                                     <svg className="h-6 w-6 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                     </svg>
                                 </div>
                                 <div className="ml-4">
-                                    <h3 className="text-sm font-bold text-rose-800 uppercase tracking-wider mb-1">Submission Error</h3>
-                                    <p className="text-rose-600 font-medium">{error}</p>
+                                    <h3 className="text-[10px] font-black text-rose-500 uppercase tracking-[0.2em] font-mono mb-1">Transmission Error</h3>
+                                    <p className="text-rose-400/80 font-medium text-sm">{error}</p>
                                 </div>
                             </div>
                         )}
 
                         <div className="space-y-10">
-                            {form.fields && form.fields.map(field => (
-                                <div key={field.id} className="group transition-all duration-300">
+                            {form.fields && form.fields.map((field, idx) => (
+                                <div
+                                    key={field.id}
+                                    className="relative group transition-all duration-500"
+                                    style={{ animationDelay: `${idx * 100}ms` }}
+                                >
                                     <FieldRenderer
                                         field={field}
                                         register={register}
@@ -183,21 +191,21 @@ const PublicFormPage = () => {
                             <button
                                 type="submit"
                                 disabled={submitting}
-                                className="btn-primary w-full !py-5 !text-xl shadow-2xl flex items-center justify-center group"
+                                className="btn-primary w-full !py-6 !text-lg !rounded-2xl shadow-glow hover:shadow-glow-lg flex items-center justify-center group"
                             >
                                 {submitting ? (
-                                    <span className="flex items-center">
-                                        <svg className="animate-spin -ml-1 mr-3 h-6 w-6 text-white" fill="none" viewBox="0 0 24 24">
+                                    <span className="flex items-center font-mono font-bold tracking-widest text-sm uppercase">
+                                        <svg className="animate-spin -ml-1 mr-4 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                         </svg>
-                                        Processing...
+                                        Encrypting & Sending...
                                     </span>
                                 ) : (
                                     <>
-                                        Submit Response
-                                        <svg className="w-5 h-5 ml-3 group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        <span className="font-mono font-black tracking-[0.2em] uppercase text-sm">Initialize Data Upload</span>
+                                        <svg className="w-5 h-5 ml-4 transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                         </svg>
                                     </>
                                 )}
@@ -206,10 +214,10 @@ const PublicFormPage = () => {
                     </form>
                 </div>
 
-                <div className="mt-12 text-center">
-                    <div className="flex items-center justify-center space-x-2 text-slate-400 font-bold text-xs uppercase tracking-[0.3em]">
-                        <span>Powered by</span>
-                        <div className="flex items-center text-slate-600 font-black tracking-normal lowercase italic text-base scale-90">
+                <div className="mt-16 text-center">
+                    <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full border border-slate-800 bg-slate-900/50 backdrop-blur-sm">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] font-mono">Infrastructure by</span>
+                        <div className="flex items-center text-slate-400 font-black tracking-tighter text-lg leading-none">
                             <span className="text-primary-500">e</span>
                             <span>formX</span>
                         </div>
@@ -221,3 +229,4 @@ const PublicFormPage = () => {
 };
 
 export default PublicFormPage;
+
