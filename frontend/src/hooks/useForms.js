@@ -29,6 +29,16 @@ export const useForms = () => {
         }
     };
 
+    const updateForm = async (id, formData) => {
+        try {
+            const response = await api.put(`/forms/${id}`, formData);
+            setForms(forms.map(f => f.id === id ? response.data : f));
+            return response.data;
+        } catch (err) {
+            throw err;
+        }
+    };
+
     const deleteForm = async (id) => {
         try {
             await api.delete(`/forms/${id}`);
@@ -42,5 +52,5 @@ export const useForms = () => {
         fetchForms();
     }, []);
 
-    return { forms, loading, error, fetchForms, createForm, deleteForm };
+    return { forms, loading, error, fetchForms, createForm, updateForm, deleteForm };
 };

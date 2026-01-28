@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useToast } from '../../context/ToastContext';
 
-const FormCard = ({ form, onDelete }) => {
+const FormCard = ({ form, onDelete, onToggleStatus }) => {
     const { addToast } = useToast();
 
     const handleCopyLink = () => {
@@ -11,13 +11,26 @@ const FormCard = ({ form, onDelete }) => {
         addToast('Public link copied to clipboard!');
     };
 
+    const isClosed = form.status === 'closed';
+
     return (
-        <div className="glass-card flex flex-col h-full group relative overflow-hidden tech-border">
+        <div className={`glass-card flex flex-col h-full group relative overflow-hidden tech-border ${isClosed ? 'opacity-75 grayscale-[0.5]' : ''}`}>
             <div className="scanline opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
             <div className="flex justify-between items-start mb-6 relative z-10">
-                <div className={`badge ${form.status === 'active' ? 'badge-success' : 'badge-warning'}`}>
-                    {form.status}
+                <div className="flex flex-col">
+                    <div className={`badge ${!isClosed ? 'badge-success' : 'badge-danger'} mb-2`}>
+                        {!isClosed ? 'Active' : 'Inactive'}
+                    </div>
+                    <button
+                        onClick={() => onToggleStatus(form.id, isClosed ? 'active' : 'closed')}
+                        className={`text-[9px] font-black font-mono tracking-widest uppercase px-2 py-1 rounded-md border transition-all ${!isClosed
+                                ? 'border-amber-500/30 text-amber-500 hover:bg-amber-500/10'
+                                : 'border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10'
+                            }`}
+                    >
+                        {isClosed ? 'Activate Portal' : 'Deactivate Portal'}
+                    </button>
                 </div>
                 <div className="flex flex-col items-end">
                     <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest font-mono mb-1">Telemetry</span>
@@ -31,7 +44,7 @@ const FormCard = ({ form, onDelete }) => {
             </div>
 
             <div className="mb-8 flex-grow relative z-10 px-1">
-                <h3 className="text-xl font-bold text-white group-hover:text-primary-400 transition-colors duration-300 mb-2 font-display">
+                <h3 className={`text-xl font-bold text-white group-hover:text-primary-400 transition-colors duration-300 mb-2 font-display ${isClosed ? 'line-through' : ''}`}>
                     {form.title}
                 </h3>
                 <p className="text-slate-500 text-sm line-clamp-2 leading-relaxed font-medium">
@@ -39,6 +52,7 @@ const FormCard = ({ form, onDelete }) => {
                 </p>
             </div>
 
+            {/* Rest of the file unchanged... */}
             <div className="grid grid-cols-2 gap-3 mb-6 relative z-10">
                 <Link
                     to={`/forms/${form.id}/edit`}
@@ -64,8 +78,9 @@ const FormCard = ({ form, onDelete }) => {
             <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 relative z-10 px-1">
                 <button
                     onClick={handleCopyLink}
-                    className="text-slate-500 hover:text-primary-400 transition-all duration-300 flex items-center gap-1.5 group/btn"
-                    title="Copy Public Access Link"
+                    disabled={isClosed}
+                    className={`text-slate-500 hover:text-primary-400 transition-all duration-300 flex items-center gap-1.5 group/btn ${isClosed ? 'cursor-not-allowed opacity-30' : ''}`}
+                    title={isClosed ? "Cannot copy link of inactive module" : "Copy Public Access Link"}
                 >
                     <svg className="w-4 h-4 transition-transform group-hover/btn:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
