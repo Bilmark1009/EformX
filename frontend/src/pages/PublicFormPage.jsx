@@ -76,22 +76,34 @@ const PublicFormPage = () => {
     }
 
     if (error && !form) {
+        const isClosed = error.toLowerCase().includes('not accepting submissions') || error.toLowerCase().includes('decommissioned');
+
         return (
             <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(15,23,42,0)_0%,rgba(2,6,23,1)_100%)]"></div>
                 <div className="max-w-md w-full glass-card tech-border !p-12 text-center relative z-10">
-                    <div className="bg-rose-500/10 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-rose-500/20 shadow-inner">
-                        <svg className="w-12 h-12 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
+                    <div className={`${isClosed ? 'bg-amber-500/10 border-amber-500/20' : 'bg-rose-500/10 border-rose-500/20'} w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 border shadow-inner`}>
+                        {isClosed ? (
+                            <svg className="w-12 h-12 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                        ) : (
+                            <svg className="w-12 h-12 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        )}
                     </div>
-                    <h1 className="text-3xl font-black text-white mb-3 tracking-tight">Access Restricted</h1>
-                    <p className="text-slate-500 mb-10 font-medium leading-relaxed font-mono text-xs uppercase tracking-tight">{error}</p>
+                    <h1 className="text-3xl font-black text-white mb-3 tracking-tight">
+                        {isClosed ? 'Module Offline' : 'Access Restricted'}
+                    </h1>
+                    <p className="text-slate-500 mb-10 font-medium leading-relaxed font-mono text-xs uppercase tracking-tight">
+                        {isClosed ? 'The administrator has temporarily deactivated this data collection portal.' : error}
+                    </p>
                     <button
-                        onClick={() => window.location.reload()}
-                        className="btn-primary w-full !rounded-xl"
+                        onClick={() => navigate('/')}
+                        className="btn-secondary w-full !rounded-xl"
                     >
-                        Re-initialize Probe
+                        Return to Hub
                     </button>
                 </div>
             </div>

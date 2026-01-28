@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useToast } from '../context/ToastContext';
 
 const Dashboard = () => {
-    const { forms, loading, fetchForms, createForm, deleteForm } = useForms();
+    const { forms, loading, fetchForms, createForm, updateForm, deleteForm } = useForms();
     const { addToast } = useToast();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -38,6 +38,15 @@ const Dashboard = () => {
             } catch (error) {
                 addToast('Failed to delete form', 'error');
             }
+        }
+    };
+
+    const handleToggleStatus = async (id, newStatus) => {
+        try {
+            await updateForm(id, { status: newStatus });
+            addToast(`Portal ${newStatus === 'active' ? 'activated' : 'deactivated'} successfully.`);
+        } catch (error) {
+            addToast('Failed to update portal status', 'error');
         }
     };
 
@@ -108,7 +117,12 @@ const Dashboard = () => {
             ) : filteredForms.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {filteredForms.map((form) => (
-                        <FormCard key={form.id} form={form} onDelete={handleDelete} />
+                        <FormCard
+                            key={form.id}
+                            form={form}
+                            onDelete={handleDelete}
+                            onToggleStatus={handleToggleStatus}
+                        />
                     ))}
                 </div>
             ) : (
