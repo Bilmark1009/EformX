@@ -19,6 +19,8 @@ Route::post('/public/forms/{form}/submit', [PublicFormController::class, 'submit
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'me']);
+    Route::put('/user/profile', [AuthController::class, 'updateProfile']);
+    Route::put('/user/password', [AuthController::class, 'updatePassword']);
 
     // Form routes
     Route::apiResource('forms', FormController::class);

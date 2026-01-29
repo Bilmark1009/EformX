@@ -27,7 +27,8 @@ const Navbar = () => {
                         <div className="hidden sm:ml-12 sm:flex sm:space-x-10">
                             {[
                                 { name: 'Dashboard', path: '/dashboard' },
-                                { name: 'Responses', path: '/responses' }
+                                { name: 'Responses', path: '/responses' },
+                                { name: 'Profile', path: '/profile' }
                             ].map((link) => (
                                 <Link
                                     key={link.path}

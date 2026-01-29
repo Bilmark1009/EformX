@@ -8,6 +8,7 @@ import FormBuilderPage from './pages/FormBuilderPage';
 import PublicFormPage from './pages/PublicFormPage';
 import ResponsesPage from './pages/ResponsesPage';
 import ResponseDetailPage from './pages/ResponseDetailPage';
+import Profile from './pages/Profile';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
 function App() {
@@ -45,6 +46,11 @@ function App() {
                         <Route path="/responses/:id" element={
                             <ProtectedRoute>
                                 <ResponseDetailPage />
+                            </ProtectedRoute>
+                        } />
+                        <Route path="/profile" element={
+                            <ProtectedRoute>
+                                <Profile />
                             </ProtectedRoute>
                         } />
 
