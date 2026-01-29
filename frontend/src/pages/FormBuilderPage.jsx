@@ -126,7 +126,7 @@ const FormBuilderPage = () => {
                             {form?.title}
                         </h1>
                         <div className="flex items-center gap-3 mt-2 font-mono text-[10px] uppercase font-black">
-                            <span className={`${form?.status === 'active' ? 'text-emerald-500' : 'text-slate-500'}`}>
+                            <span className={`${form?.status === 'active' ? 'text-success' : 'text-slate-500'}`}>
                                 {form?.status}
                             </span>
                             <span className="text-slate-800">•</span>
@@ -144,7 +144,7 @@ const FormBuilderPage = () => {
                     </Link>
                     <button
                         className={`!text-[10px] px-8 py-3.5 rounded-xl transition-all font-black uppercase tracking-[0.2em] ${form?.status === 'draft'
-                            ? 'bg-primary-600 text-white shadow-glow hover:shadow-glow-lg'
+                            ? 'bg-primary-500 text-white shadow-glow hover:shadow-glow-lg'
                             : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
                             }`}
                         onClick={() => handleUpdateSettings({ status: form.status === 'draft' ? 'active' : 'draft' })}
@@ -175,7 +175,7 @@ const FormBuilderPage = () => {
                                 <label className="block text-[9px] font-black text-slate-600 uppercase tracking-widest mb-2 font-mono ml-1">Node Title</label>
                                 <input
                                     type="text"
-                                    className="input-field !text-xs !py-3 font-mono font-bold tracking-tight !bg-slate-950/50"
+                                    className="input-field !text-xs !py-3 font-mono font-bold tracking-tight !bg-slate-900/80"
                                     defaultValue={form?.title}
                                     onBlur={(e) => handleUpdateSettings({ title: e.target.value })}
                                 />
