@@ -114,21 +114,21 @@ const ResponseDetailPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 {/* Main Content - Values */}
                 <div className="lg:col-span-2 space-y-10">
-                    <div className="glass shadow-2xl rounded-[2.5rem] overflow-hidden border-white/50">
-                        <div className="p-10 sm:p-14 space-y-12 bg-white/40">
+                    <div className="glass shadow-2xl rounded-[2.5rem] overflow-hidden border-slate-800">
+                        <div className="p-10 sm:p-14 space-y-12 bg-slate-900/60 transition-colors">
                             {response.values && response.values.map((val) => (
                                 <div key={val.id} className="group">
                                     <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4 ml-1">
                                         {val.field?.label || 'Deleted Descriptor'}
                                     </label>
-                                    <div className="text-2xl font-bold text-slate-800 leading-relaxed pl-1 border-l-4 border-slate-100 group-hover:border-primary-400 transition-colors duration-300">
+                                    <div className="text-2xl font-bold text-white leading-relaxed pl-1 border-l-4 border-slate-700 group-hover:border-primary-400 transition-colors duration-300">
                                         {formatValue(val.value)}
                                     </div>
                                 </div>
                             ))}
                             {(!response.values || response.values.length === 0) && (
-                                <div className="text-center py-20 bg-slate-50/50 rounded-[2rem]">
-                                    <p className="text-slate-400 font-bold italic">No intelligence captured for this record.</p>
+                                <div className="text-center py-20 bg-slate-900/40 rounded-[2rem]">
+                                    <p className="text-slate-500 font-bold italic">No intelligence captured for this record.</p>
                                 </div>
                             )}
                         </div>
@@ -138,18 +138,18 @@ const ResponseDetailPage = () => {
                 {/* Sidebar - Metadata & Files */}
                 <div className="space-y-10">
                     {/* Metadata */}
-                    <div className="glass shadow-xl rounded-[2rem] overflow-hidden border-white/50">
-                        <div className="bg-slate-50/50 backdrop-blur px-8 py-5 border-b border-slate-100/50">
-                            <h3 className="text-sm font-black text-slate-500 uppercase tracking-widest">Metadata</h3>
+                    <div className="glass shadow-xl rounded-[2rem] overflow-hidden border-slate-800">
+                        <div className="bg-slate-900/80 backdrop-blur px-8 py-5 border-b border-slate-800/50">
+                            <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest">Metadata</h3>
                         </div>
-                        <div className="p-8 space-y-8 bg-white/40">
+                        <div className="p-8 space-y-8 bg-slate-900/40">
                             <div className="flex items-center justify-between">
-                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Network Node</span>
-                                <span className="text-sm font-mono font-bold text-slate-700 bg-emerald-50 text-emerald-600 px-3 py-1 rounded-lg border border-emerald-100">{response.ip_address}</span>
+                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Network Node</span>
+                                <span className="text-sm font-mono font-bold text-slate-300 bg-emerald-950/30 text-emerald-400 px-3 py-1 rounded-lg border border-emerald-500/20">{response.ip_address}</span>
                             </div>
                             <div>
-                                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Origin Identifier</label>
-                                <p className="text-xs text-slate-500 leading-relaxed break-words font-medium py-3 px-4 bg-slate-50 rounded-2xl border border-slate-100 italic">
+                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Origin Identifier</label>
+                                <p className="text-xs text-slate-400 leading-relaxed break-words font-medium py-3 px-4 bg-slate-900/50 rounded-2xl border border-slate-800 italic">
                                     {response.metadata?.user_agent || 'Standard Transmission'}
                                 </p>
                             </div>
@@ -157,11 +157,11 @@ const ResponseDetailPage = () => {
                     </div>
 
                     {/* Files */}
-                    <div className="glass shadow-xl rounded-[2rem] overflow-hidden border-white/50">
-                        <div className="bg-slate-50/50 backdrop-blur px-8 py-5 border-b border-slate-100/50">
-                            <h3 className="text-sm font-black text-slate-500 uppercase tracking-widest">Transferred Assets</h3>
+                    <div className="glass shadow-xl rounded-[2rem] overflow-hidden border-slate-800">
+                        <div className="bg-slate-900/80 backdrop-blur px-8 py-5 border-b border-slate-800/50">
+                            <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest">Transferred Assets</h3>
                         </div>
-                        <div className="p-8 space-y-6 bg-white/40">
+                        <div className="p-8 space-y-6 bg-slate-900/40">
                             {response.files && response.files.length > 0 ? (
                                 response.files.map((file) => (
                                     <div key={file.id} className="flex items-center justify-between p-5 glass-card !rounded-2xl border-white hover:border-primary-200 transition-all group">
@@ -172,15 +172,15 @@ const ResponseDetailPage = () => {
                                                 </svg>
                                             </div>
                                             <div>
-                                                <p className="font-bold text-slate-800 text-sm truncate max-w-[140px]">{file.filename}</p>
-                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">{(file.size / 1024).toFixed(1)} KB</p>
+                                                <p className="font-bold text-slate-100 text-sm truncate max-w-[140px]">{file.filename}</p>
+                                                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-0.5">{(file.size / 1024).toFixed(1)} KB</p>
                                             </div>
                                         </div>
                                         <a
                                             href={`${import.meta.env.VITE_API_URL}/files/${file.id}/download`}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-600 hover:shadow-md transition-all active:scale-95"
+                                            className="w-10 h-10 bg-slate-800 shadow-sm rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-600 hover:shadow-md transition-all active:scale-95 border border-slate-700"
                                         >
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />

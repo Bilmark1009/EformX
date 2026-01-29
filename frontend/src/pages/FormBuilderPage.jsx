@@ -175,7 +175,7 @@ const FormBuilderPage = () => {
                                 <label className="block text-[9px] font-black text-slate-600 uppercase tracking-widest mb-2 font-mono ml-1">Node Title</label>
                                 <input
                                     type="text"
-                                    className="input-field !text-xs !py-3 font-mono font-bold tracking-tight !bg-slate-950/50"
+                                    className="input-field !text-xs !py-3 font-mono font-bold tracking-tight !bg-slate-900/80"
                                     defaultValue={form?.title}
                                     onBlur={(e) => handleUpdateSettings({ title: e.target.value })}
                                 />
