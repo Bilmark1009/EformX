@@ -18,8 +18,16 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
+            'name' => 'Super Admin',
+            'email' => 'superadmin@eformx.sys',
+            'password' => 'password',
+            'role' => 'superadmin',
+        ]);
+
+        User::factory()->create([
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'test@email.com',
+            'role' => 'admin',
         ]);
     }
 }

@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
-Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/public/forms/{form}', [PublicFormController::class, 'show']);
@@ -36,4 +35,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/responses/{response}', [ResponseController::class, 'show']);
     Route::delete('/responses/{response}', [ResponseController::class, 'destroy']);
     Route::get('/forms/{form}/responses/export', [ResponseController::class, 'export']);
+    Route::get('/forms/{form}/responses/stats', [ResponseController::class, 'stats']);
+
+    // User Management routes (Super Admin only)
+    Route::middleware('superadmin')->group(function () {
+        Route::get('/admin/stats', [\App\Http\Controllers\UserManagementController::class, 'stats']);
+        Route::get('/users', [\App\Http\Controllers\UserManagementController::class, 'index']);
+        Route::post('/users', [\App\Http\Controllers\UserManagementController::class, 'store']);
+        Route::delete('/users/{user}', [\App\Http\Controllers\UserManagementController::class, 'destroy']);
+    });
 });
