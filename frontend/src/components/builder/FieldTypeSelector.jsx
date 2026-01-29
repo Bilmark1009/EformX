@@ -7,6 +7,7 @@ const fieldTypes = [
     { type: 'dropdown', label: 'Dropdown', icon: 'M19 9l-7 7-7-7' },
     { type: 'checkbox', label: 'Checkbox', icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
     { type: 'file', label: 'File Upload', icon: 'M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12' },
+    { type: 'date', label: 'Date Selection', icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
 ];
 
 const FieldTypeSelector = ({ onSelect }) => {
@@ -34,7 +35,7 @@ const FieldTypeSelector = ({ onSelect }) => {
                             {field.label}
                         </div>
                         <div className="text-[8px] font-bold text-slate-600 uppercase tracking-tight font-mono leading-tight mt-0.5">
-                            INIT_MODULE_{field.type.toUpperCase()}
+                            ADD_{field.type.toUpperCase()}_FIELD
                         </div>
                     </div>
                 </button>

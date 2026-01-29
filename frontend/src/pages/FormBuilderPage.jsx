@@ -102,7 +102,7 @@ const FormBuilderPage = () => {
                         <div className="absolute inset-0 border-4 border-primary-500/10 rounded-full"></div>
                         <div className="absolute inset-0 border-4 border-primary-500 rounded-full border-t-transparent animate-spin shadow-glow"></div>
                     </div>
-                    <span className="text-[10px] font-bold font-mono text-primary-500 animate-pulse tracking-[0.3em] uppercase">Booting Builder...</span>
+                    <span className="text-[10px] font-bold font-mono text-primary-500 animate-pulse tracking-[0.3em] uppercase">Opening Editor...</span>
                 </div>
             </DashboardLayout>
         );
@@ -119,7 +119,7 @@ const FormBuilderPage = () => {
                     </Link>
                     <div className="relative">
                         <div className="flex items-center gap-3 mb-2">
-                            <span className="text-[10px] font-bold font-mono tracking-[0.2em] text-primary-500 uppercase">Architecture Mode</span>
+                            <span className="text-[10px] font-bold font-mono tracking-[0.2em] text-primary-500 uppercase">Form Editor</span>
                             <div className="h-[1px] w-12 bg-primary-500/30"></div>
                         </div>
                         <h1 className="text-4xl font-black tracking-tighter text-white font-display">
@@ -130,7 +130,7 @@ const FormBuilderPage = () => {
                                 {form?.status}
                             </span>
                             <span className="text-slate-800">•</span>
-                            <span className="text-primary-400">{fields.length} Modules Online</span>
+                            <span className="text-primary-400">{fields.length} Fields Added</span>
                         </div>
                     </div>
                 </div>
@@ -150,7 +150,7 @@ const FormBuilderPage = () => {
                         onClick={() => handleUpdateSettings({ status: form.status === 'draft' ? 'active' : 'draft' })}
                         disabled={saving}
                     >
-                        {form?.status === 'draft' ? 'Deploy Node' : 'Suspend Node'}
+                        {form?.status === 'draft' ? 'Publish Form' : 'Unpublish Form'}
                     </button>
                 </div>
             </div>
@@ -160,7 +160,7 @@ const FormBuilderPage = () => {
                     <div className="glass-card tech-border !p-6">
                         <div className="flex items-center gap-2 mb-6">
                             <div className="w-1.5 h-1.5 bg-primary-500 rounded-full"></div>
-                            <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono">Module Library</h3>
+                            <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono">Field Library</h3>
                         </div>
                         <FieldTypeSelector onSelect={handleAddField} />
                     </div>
@@ -168,11 +168,11 @@ const FormBuilderPage = () => {
                     <div className="glass-card tech-border !p-6">
                         <div className="flex items-center gap-2 mb-6">
                             <div className="w-1.5 h-1.5 bg-primary-500 rounded-full shadow-glow"></div>
-                            <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono">Core Settings</h3>
+                            <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono">General Settings</h3>
                         </div>
                         <div className="space-y-6">
                             <div>
-                                <label className="block text-[9px] font-black text-slate-600 uppercase tracking-widest mb-2 font-mono ml-1">Node Title</label>
+                                <label className="block text-[9px] font-black text-slate-600 uppercase tracking-widest mb-2 font-mono ml-1">Form Name</label>
                                 <input
                                     type="text"
                                     className="input-field !text-xs !py-3 font-mono font-bold tracking-tight !bg-slate-900/80"
@@ -188,9 +188,9 @@ const FormBuilderPage = () => {
                     <div className="glass-card tech-border !p-0 min-h-[700px] flex flex-col relative overflow-hidden group">
                         <div className="scanline"></div>
                         <div className="bg-slate-900/40 border-b border-slate-800/80 px-8 py-4 flex justify-between items-center relative z-10">
-                            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono">Primary Canvas</span>
+                            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono">Form Preview</span>
                             <div className="flex items-center gap-4">
-                                <span className="text-[10px] font-black text-primary-500 uppercase tracking-widest font-mono">{fields.length} Nodes</span>
+                                <span className="text-[10px] font-black text-primary-500 uppercase tracking-widest font-mono">{fields.length} Fields</span>
                                 <div className="w-2 h-2 rounded-full bg-primary-500 animate-pulse-glow"></div>
                             </div>
                         </div>
@@ -203,8 +203,8 @@ const FormBuilderPage = () => {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                         </svg>
                                     </div>
-                                    <h3 className="text-2xl font-black text-white mb-3">Canvas Void</h3>
-                                    <p className="text-slate-500 max-w-xs font-medium text-sm">Select a module from the telemetry library to initialize your deployment.</p>
+                                    <h3 className="text-2xl font-black text-white mb-3">Your Form is Empty</h3>
+                                    <p className="text-slate-500 max-w-xs font-medium text-sm">Select a field type from the library to start building your form.</p>
                                 </div>
                             ) : (
                                 <div className="p-8">
@@ -250,8 +250,8 @@ const FormBuilderPage = () => {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
                                 </div>
-                                <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono mb-2">Module Inspector</h4>
-                                <p className="text-xs text-slate-600 font-medium leading-relaxed uppercase tracking-tight">Select a module on the canvas to intercept and modify its parameters.</p>
+                                <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono mb-2">Field Settings</h4>
+                                <p className="text-xs text-slate-600 font-medium leading-relaxed uppercase tracking-tight">Select a field in the preview to edit its options.</p>
                             </div>
                         )}
                     </div>

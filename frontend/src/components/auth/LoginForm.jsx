@@ -14,8 +14,12 @@ const LoginForm = () => {
         setLoading(true);
         setError('');
         try {
-            await login(data.email, data.password);
-            navigate('/dashboard');
+            const userData = await login(data.email, data.password);
+            if (userData.user.role === 'superadmin') {
+                navigate('/users');
+            } else {
+                navigate('/dashboard');
+            }
         } catch (err) {
             setError(err.response?.data?.message || 'Invalid email or password');
         } finally {
@@ -80,14 +84,7 @@ const LoginForm = () => {
                 </div>
             </form>
 
-            <div className="mt-10 pt-8 border-t border-slate-800/50 text-center">
-                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono">
-                    New Operator?{' '}
-                    <Link to="/register" className="text-primary-500 hover:text-primary-400 transition-colors">
-                        Initialize Profile
-                    </Link>
-                </p>
-            </div>
+
         </div>
     );
 };

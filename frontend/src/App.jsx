@@ -8,7 +8,9 @@ import FormBuilderPage from './pages/FormBuilderPage';
 import PublicFormPage from './pages/PublicFormPage';
 import ResponsesPage from './pages/ResponsesPage';
 import ResponseDetailPage from './pages/ResponseDetailPage';
+import UserManagement from './pages/UserManagement';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import SuperAdminRoute from './components/auth/SuperAdminRoute';
 
 function App() {
     return (
@@ -18,7 +20,7 @@ function App() {
                     <Routes>
                         {/* Public routes */}
                         <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
+
                         <Route path="/f/:id" element={<PublicFormPage />} />
 
                         {/* Protected routes */}
@@ -46,6 +48,11 @@ function App() {
                             <ProtectedRoute>
                                 <ResponseDetailPage />
                             </ProtectedRoute>
+                        } />
+                        <Route path="/users" element={
+                            <SuperAdminRoute>
+                                <UserManagement />
+                            </SuperAdminRoute>
                         } />
 
                         {/* Default redirect */}
