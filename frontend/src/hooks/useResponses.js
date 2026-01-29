@@ -10,17 +10,24 @@ export const useResponses = (formId = null) => {
     const fetchResponses = async (params = {}) => {
         setLoading(true);
         try {
-            // Updated to handle both cases: specific form or all responses (if we add the route)
             const url = formId ? `/forms/${formId}/responses` : '/responses';
             const response = await api.get(url, { params });
-
-            // Laravel pagination returns data in a 'data' wrap
             setResponses(response.data.data || response.data);
             setError(null);
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to fetch responses');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const fetchStats = async (targetId = formId) => {
+        if (!targetId) return;
+        try {
+            const response = await api.get(`/forms/${targetId}/responses/stats`);
+            setStats(response.data);
+        } catch (err) {
+            console.error('Failed to fetch stats:', err);
         }
     };
 
@@ -61,7 +68,9 @@ export const useResponses = (formId = null) => {
         responses,
         loading,
         error,
+        stats,
         fetchResponses,
+        fetchStats,
         deleteResponse,
         exportResponses
     };

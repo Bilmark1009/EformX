@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../components/common/DashboardLayout';
 import FormCard from '../components/dashboard/FormCard';
@@ -6,15 +6,24 @@ import Modal from '../components/common/Modal';
 import { useForms } from '../hooks/useForms';
 import { useForm } from 'react-hook-form';
 import { useToast } from '../context/ToastContext';
+import { AuthContext } from '../context/AuthContext';
 
 const Dashboard = () => {
     const { forms, loading, fetchForms, createForm, updateForm, deleteForm } = useForms();
+    const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    React.useEffect(() => {
+        if (user?.role === 'superadmin') {
+            navigate('/users');
+        }
+    }, [user, navigate]);
+
     const { addToast } = useToast();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [sortBy, setSortBy] = useState('newest');
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
@@ -68,14 +77,14 @@ const Dashboard = () => {
                 <div className="relative">
                     <div className="absolute -left-4 top-0 bottom-0 w-1 bg-primary-500/50 rounded-full"></div>
                     <div className="flex items-center gap-3 mb-2">
-                        <span className="text-[10px] font-bold font-mono tracking-[0.2em] text-primary-500 uppercase">System Intelligence</span>
+                        <span className="text-[10px] font-bold font-mono tracking-[0.2em] text-primary-500 uppercase">Dashboard Control</span>
                         <div className="h-[1px] w-12 bg-primary-500/30"></div>
                     </div>
                     <h1 className="text-5xl font-black tracking-tighter text-white font-display">
                         My <span className="text-primary-500">Workspace</span>
                     </h1>
                     <p className="text-slate-500 font-medium mt-2 max-w-md leading-relaxed">
-                        Orchestrate your data collection infrastructure and monitor telemetry in real-time.
+                        Manage your forms and track submissions in real-time.
                     </p>
                 </div>
 
@@ -88,7 +97,7 @@ const Dashboard = () => {
                         </div>
                         <input
                             type="text"
-                            placeholder="Query system modules..."
+                            placeholder="Search your forms..."
                             className="input-field !pl-11 !py-3 w-full sm:w-72 glass !bg-slate-900/40 border-slate-800 text-sm font-mono tracking-tight focus:border-primary-500/50"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
@@ -101,8 +110,19 @@ const Dashboard = () => {
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
-                        Deploy Module
+                        Create Form
                     </button>
+                    {user?.role === 'superadmin' && (
+                        <button
+                            onClick={() => navigate('/users')}
+                            className="btn-secondary !bg-violet-500/10 !text-violet-400 !border-violet-500/20 hover:!bg-violet-500/20 !rounded-xl !px-6 transition-all"
+                        >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </button>
+                    )}
+
                 </div>
             </div>
 
@@ -112,7 +132,7 @@ const Dashboard = () => {
                         <div className="absolute inset-0 border-4 border-primary-500/20 rounded-full"></div>
                         <div className="absolute inset-0 border-4 border-primary-500 rounded-full border-t-transparent animate-spin"></div>
                     </div>
-                    <span className="text-xs font-bold font-mono text-primary-500 animate-pulse tracking-widest uppercase">Initialising Core...</span>
+                    <span className="text-xs font-bold font-mono text-primary-500 animate-pulse tracking-widest uppercase">Loading workspace...</span>
                 </div>
             ) : filteredForms.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -133,15 +153,15 @@ const Dashboard = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                         </svg>
                     </div>
-                    <h3 className="text-3xl font-black text-white mb-3 tracking-tight">No Active Modules</h3>
+                    <h3 className="text-3xl font-black text-white mb-3 tracking-tight">No Forms Yet</h3>
                     <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium leading-relaxed">
-                        Database indicates zero deployed forms. Protocol suggests immediate creation of a data collection node.
+                        You haven't created any forms yet. Start by creating your first form to collect information.
                     </p>
                     <button
                         onClick={() => setIsModalOpen(true)}
                         className="btn-primary !px-10 !rounded-xl"
                     >
-                        Initialize First Module
+                        Create Your First Form
                     </button>
                 </div>
             )}

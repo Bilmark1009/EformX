@@ -23,7 +23,17 @@ const FieldRenderer = ({ field, register, errors, watch }) => {
                     />
                 );
 
+            case 'date':
+                return (
+                    <input
+                        type="date"
+                        {...register(fieldName, { required: required && `${label} is required` })}
+                        className={inputClass}
+                    />
+                );
+
             case 'long_text':
+            case 'textarea': // Alias for seeder compatibility
                 return (
                     <textarea
                         placeholder={config?.placeholder || 'Enter detailed parameters...'}

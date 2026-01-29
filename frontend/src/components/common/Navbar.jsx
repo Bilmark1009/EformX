@@ -5,7 +5,6 @@ import { AuthContext } from '../../context/AuthContext';
 const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
     const location = useLocation();
-
     const isActive = (path) => location.pathname === path;
 
     return (
@@ -25,10 +24,10 @@ const Navbar = () => {
                         </Link>
 
                         <div className="hidden sm:ml-12 sm:flex sm:space-x-10">
-                            {[
+                            {(user?.role === 'superadmin' ? [] : [
                                 { name: 'Dashboard', path: '/dashboard' },
                                 { name: 'Responses', path: '/responses' }
-                            ].map((link) => (
+                            ]).map((link) => (
                                 <Link
                                     key={link.path}
                                     to={link.path}
@@ -44,19 +43,24 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-center space-x-6">
+                    <div className="flex items-center gap-6">
                         <div className="hidden sm:flex flex-col items-end">
-                            <span className="text-xs font-bold font-mono tracking-tighter text-primary-500 uppercase flex items-center">
-                                <span className="w-1.5 h-1.5 bg-primary-500 rounded-full mr-1.5 animate-pulse"></span>
+                            <span className="text-[10px] font-bold font-mono text-primary-500 uppercase tracking-widest leading-none mb-1">
+                                <span className="w-1.5 h-1.5 bg-primary-500 rounded-full inline-block mr-1.5 animate-pulse"></span>
                                 Online
                             </span>
-                            <span className="text-sm font-bold text-white">{user?.name}</span>
+                            <span className="text-sm font-black text-white uppercase tracking-tight truncate max-w-[120px]">
+                                {user?.name}
+                            </span>
                         </div>
                         <button
                             onClick={logout}
-                            className="btn-secondary !py-2 !px-5 text-xs font-bold tracking-widest uppercase hover:text-rose-400 hover:border-rose-900 transition-all"
+                            title="Log Out"
+                            className="w-12 h-12 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/50 hover:shadow-glow-sm hover:shadow-rose-500/20 transition-all duration-300 group"
                         >
-                            Log Out
+                            <svg className="w-6 h-6 transform group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
                         </button>
                     </div>
                 </div>

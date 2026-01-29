@@ -1,9 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useToast } from '../../context/ToastContext';
+import AnimatedCounter from '../common/AnimatedCounter';
 
 const FormCard = ({ form, onDelete, onToggleStatus }) => {
     const { addToast } = useToast();
+
+    // Generate pseudo-random sparkline data based on form ID
+    const generateSparklineData = () => {
+        const seed = form.id;
+        const points = [];
+        for (let i = 0; i < 10; i++) {
+            const val = 10 + Math.abs((Math.sin(seed * (i + 1)) * 40));
+            points.push(val);
+        }
+        return points;
+    };
+
+    const sparklineData = generateSparklineData();
+    const sparklinePoints = sparklineData.map((val, i) => `${i * 20},${60 - val}`).join(' ');
 
     const handleCopyLink = () => {
         const url = `${window.location.origin}/f/${form.id}`;
@@ -20,7 +35,7 @@ const FormCard = ({ form, onDelete, onToggleStatus }) => {
             <div className="flex justify-between items-start mb-6 relative z-10">
                 <div className="flex flex-col">
                     <div className={`badge ${!isClosed ? 'badge-success' : 'badge-danger'} mb-2`}>
-                        {!isClosed ? 'Active' : 'Inactive'}
+                        {!isClosed ? 'Live' : 'Hidden'}
                     </div>
                     <button
                         onClick={() => onToggleStatus(form.id, isClosed ? 'active' : 'closed')}
@@ -29,18 +44,41 @@ const FormCard = ({ form, onDelete, onToggleStatus }) => {
                             : 'border-success/30 text-success hover:bg-success/10'
                             }`}
                     >
-                        {isClosed ? 'Activate Portal' : 'Deactivate Portal'}
+                        {isClosed ? 'Make Public' : 'Hide from Public'}
                     </button>
                 </div>
                 <div className="flex flex-col items-end">
-                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest font-mono mb-1">Telemetry</span>
+                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest font-mono mb-1">Responses</span>
                     <div className="flex items-center text-primary-400 font-mono font-bold text-lg leading-none">
                         <svg className="w-4 h-4 mr-2 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                         </svg>
-                        {String(form.responses_count || 0).padStart(2, '0')}
+                        <AnimatedCounter value={form.responses_count || 0} />
                     </div>
                 </div>
+            </div>
+
+            {/* Sparkline Visualizer */}
+            <div className="h-16 w-full mb-4 relative overflow-hidden rounded-lg bg-slate-900/40 border border-slate-800/50">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-transparent"></div>
+                <svg className="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 180 60">
+                    <polyline
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        points={sparklinePoints}
+                        className="text-primary-500/30"
+                    />
+                    <polyline
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        points={sparklinePoints}
+                        strokeDasharray="1000"
+                        strokeDashoffset="1000"
+                        className="text-primary-500 animate-draw-sparkline"
+                    />
+                </svg>
             </div>
 
             <div className="mb-8 flex-grow relative z-10 px-1">
@@ -80,7 +118,7 @@ const FormCard = ({ form, onDelete, onToggleStatus }) => {
                     onClick={handleCopyLink}
                     disabled={isClosed}
                     className={`text-slate-500 hover:text-primary-400 transition-all duration-300 flex items-center gap-1.5 group/btn ${isClosed ? 'cursor-not-allowed opacity-30' : ''}`}
-                    title={isClosed ? "Cannot copy link of inactive module" : "Copy Public Access Link"}
+                    title={isClosed ? "Cannot copy link of hidden form" : "Copy Shared link"}
                 >
                     <svg className="w-4 h-4 transition-transform group-hover/btn:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
@@ -90,7 +128,7 @@ const FormCard = ({ form, onDelete, onToggleStatus }) => {
                 <button
                     onClick={() => onDelete(form.id, form.title)}
                     className="text-slate-500 hover:text-error transition-all duration-300 p-1.5 hover:bg-error/10 rounded-lg"
-                    title="Terminate Module"
+                    title="Delete Form"
                 >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
