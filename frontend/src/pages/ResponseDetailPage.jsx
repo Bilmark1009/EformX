@@ -42,7 +42,7 @@ const ResponseDetailPage = () => {
         return (
             <DashboardLayout>
                 <div className="flex justify-center py-20">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
                 </div>
             </DashboardLayout>
         );
@@ -51,9 +51,9 @@ const ResponseDetailPage = () => {
     if (error) {
         return (
             <DashboardLayout>
-                <div className="bg-rose-50 border-l-4 border-rose-500 p-4">
-                    <p className="text-rose-700">{error}</p>
-                    <Link to="/responses" className="text-rose-700 font-bold underline mt-2 inline-block">Back to Responses</Link>
+                <div className="bg-error/10 border-l-4 border-error p-6 rounded-r-2xl">
+                    <p className="text-error font-bold tracking-tight uppercase font-mono text-xs">{error}</p>
+                    <Link to="/responses" className="text-slate-400 font-black text-[10px] uppercase tracking-widest mt-4 inline-block hover:text-white transition-colors">Return to Hub</Link>
                 </div>
             </DashboardLayout>
         );
@@ -101,7 +101,7 @@ const ResponseDetailPage = () => {
                 <div className="flex items-center space-x-4">
                     <button
                         onClick={handleDelete}
-                        className="text-rose-500 font-bold text-sm px-6 py-3 rounded-2xl border border-rose-100 hover:bg-rose-50 transition-all flex items-center"
+                        className="text-error font-bold text-sm px-6 py-3 rounded-2xl border border-error/20 hover:bg-error/10 transition-all flex items-center"
                     >
                         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -137,25 +137,6 @@ const ResponseDetailPage = () => {
 
                 {/* Sidebar - Metadata & Files */}
                 <div className="space-y-10">
-                    {/* Metadata */}
-                    <div className="glass shadow-xl rounded-[2rem] overflow-hidden border-slate-800">
-                        <div className="bg-slate-900/80 backdrop-blur px-8 py-5 border-b border-slate-800/50">
-                            <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest">Metadata</h3>
-                        </div>
-                        <div className="p-8 space-y-8 bg-slate-900/40">
-                            <div className="flex items-center justify-between">
-                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Network Node</span>
-                                <span className="text-sm font-mono font-bold text-slate-300 bg-emerald-950/30 text-emerald-400 px-3 py-1 rounded-lg border border-emerald-500/20">{response.ip_address}</span>
-                            </div>
-                            <div>
-                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Origin Identifier</label>
-                                <p className="text-xs text-slate-400 leading-relaxed break-words font-medium py-3 px-4 bg-slate-900/50 rounded-2xl border border-slate-800 italic">
-                                    {response.metadata?.user_agent || 'Standard Transmission'}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
                     {/* Files */}
                     <div className="glass shadow-xl rounded-[2rem] overflow-hidden border-slate-800">
                         <div className="bg-slate-900/80 backdrop-blur px-8 py-5 border-b border-slate-800/50">
@@ -190,12 +171,12 @@ const ResponseDetailPage = () => {
                                 ))
                             ) : (
                                 <div className="text-center py-8">
-                                    <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                                        <svg className="w-6 h-6 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div className="w-12 h-12 bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-slate-700">
+                                        <svg className="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                         </svg>
                                     </div>
-                                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">No assets attached</p>
+                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono">No Assets Attached</p>
                                 </div>
                             )}
                         </div>

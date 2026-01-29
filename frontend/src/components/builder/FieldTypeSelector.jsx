@@ -16,7 +16,7 @@ const FieldTypeSelector = ({ onSelect }) => {
                 <button
                     key={field.type}
                     onClick={() => onSelect(field.type)}
-                    className="flex items-center p-4 !bg-slate-950/40 border border-slate-800/80 rounded-xl hover:border-primary-500/50 hover:bg-slate-900/60 transition-all duration-300 group text-left relative overflow-hidden"
+                    className="flex items-center p-4 !bg-slate-900/40 border border-slate-800 rounded-xl hover:border-primary-500/50 hover:bg-slate-800/60 transition-all duration-300 group text-left relative overflow-hidden"
                 >
                     <div className="absolute inset-y-0 left-0 w-1 bg-primary-500/0 group-hover:bg-primary-500 transition-all"></div>
                     <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center mr-4 group-hover:shadow-glow-sm group-hover:shadow-primary-500/20 group-hover:border-primary-500/30 transition-all">

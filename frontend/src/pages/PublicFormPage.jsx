@@ -65,7 +65,7 @@ const PublicFormPage = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4 space-y-4">
+            <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-4 space-y-4">
                 <div className="relative w-16 h-16">
                     <div className="absolute inset-0 border-4 border-primary-500/10 rounded-full"></div>
                     <div className="absolute inset-0 border-4 border-primary-500 rounded-full border-t-transparent animate-spin shadow-glow"></div>
@@ -79,16 +79,16 @@ const PublicFormPage = () => {
         const isClosed = error.toLowerCase().includes('not accepting submissions') || error.toLowerCase().includes('decommissioned');
 
         return (
-            <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
+            <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 relative overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(15,23,42,0)_0%,rgba(2,6,23,1)_100%)]"></div>
                 <div className="max-w-md w-full glass-card tech-border !p-12 text-center relative z-10">
-                    <div className={`${isClosed ? 'bg-amber-500/10 border-amber-500/20' : 'bg-rose-500/10 border-rose-500/20'} w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 border shadow-inner`}>
+                    <div className={`${isClosed ? 'bg-warning/10 border-warning/20' : 'bg-error/10 border-error/20'} w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 border shadow-inner`}>
                         {isClosed ? (
-                            <svg className="w-12 h-12 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-12 h-12 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
                         ) : (
-                            <svg className="w-12 h-12 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-12 h-12 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
                         )}
@@ -112,17 +112,17 @@ const PublicFormPage = () => {
 
     if (submitted) {
         return (
-            <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
+            <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 relative overflow-hidden">
                 <div className="scanline"></div>
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(14,165,233,0.05)_0%,rgba(2,6,23,0)_100%)]"></div>
 
                 <div className="max-w-md w-full glass-card tech-border !p-12 text-center relative z-10">
-                    <div className="bg-emerald-500/10 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-emerald-500/20 shadow-glow shadow-emerald-500/20">
-                        <svg className="w-12 h-12 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="bg-success/10 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-success/20 shadow-glow shadow-success/20">
+                        <svg className="w-12 h-12 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                     </div>
-                    <h1 className="text-4xl font-black text-white mb-4 tracking-tighter">Transmission <span className="text-emerald-500">Complete</span></h1>
+                    <h1 className="text-4xl font-black text-white mb-4 tracking-tighter">Transmission <span className="text-success">Complete</span></h1>
                     <p className="text-slate-500 mb-10 font-medium leading-relaxed text-sm font-mono uppercase tracking-tight">Your data packet has been encrypted and successfully routed to the central core.</p>
                     <button
                         onClick={() => setSubmitted(false)}
@@ -139,7 +139,7 @@ const PublicFormPage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-slate-950 py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="min-h-screen bg-slate-900 py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
             <div className="scanline"></div>
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(14,165,233,0.07)_0%,rgba(2,6,23,0)_70%)]"></div>
 
@@ -169,15 +169,15 @@ const PublicFormPage = () => {
                     {/* Interactive Form Fields */}
                     <form onSubmit={handleSubmit(onSubmit)} className="p-10 sm:p-16 space-y-12">
                         {error && (
-                            <div className="bg-rose-500/10 border-l-4 border-rose-500 p-6 rounded-r-2xl mb-12 flex items-start tech-border !border-t-0 !border-b-0 !border-r-0">
+                            <div className="bg-error/10 border-l-4 border-error p-6 rounded-r-2xl mb-12 flex items-start tech-border !border-t-0 !border-b-0 !border-r-0">
                                 <div className="flex-shrink-0 mt-0.5">
-                                    <svg className="h-6 w-6 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="h-6 w-6 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                     </svg>
                                 </div>
                                 <div className="ml-4">
-                                    <h3 className="text-[10px] font-black text-rose-500 uppercase tracking-[0.2em] font-mono mb-1">Transmission Error</h3>
-                                    <p className="text-rose-400/80 font-medium text-sm">{error}</p>
+                                    <h3 className="text-[10px] font-black text-error uppercase tracking-[0.2em] font-mono mb-1">Transmission Error</h3>
+                                    <p className="text-error/80 font-medium text-sm">{error}</p>
                                 </div>
                             </div>
                         )}

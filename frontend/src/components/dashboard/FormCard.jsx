@@ -25,8 +25,8 @@ const FormCard = ({ form, onDelete, onToggleStatus }) => {
                     <button
                         onClick={() => onToggleStatus(form.id, isClosed ? 'active' : 'closed')}
                         className={`text-[9px] font-black font-mono tracking-widest uppercase px-2 py-1 rounded-md border transition-all ${!isClosed
-                                ? 'border-amber-500/30 text-amber-500 hover:bg-amber-500/10'
-                                : 'border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10'
+                            ? 'border-warning/30 text-warning hover:bg-warning/10'
+                            : 'border-success/30 text-success hover:bg-success/10'
                             }`}
                     >
                         {isClosed ? 'Activate Portal' : 'Deactivate Portal'}
@@ -89,7 +89,7 @@ const FormCard = ({ form, onDelete, onToggleStatus }) => {
                 </button>
                 <button
                     onClick={() => onDelete(form.id, form.title)}
-                    className="text-slate-500 hover:text-rose-500 transition-all duration-300 p-1.5 hover:bg-rose-500/10 rounded-lg"
+                    className="text-slate-500 hover:text-error transition-all duration-300 p-1.5 hover:bg-error/10 rounded-lg"
                     title="Terminate Module"
                 >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

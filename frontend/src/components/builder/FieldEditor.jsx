@@ -37,7 +37,7 @@ const FieldEditor = ({ field, onUpdate, onDelete }) => {
                 </div>
                 <button
                     onClick={() => onDelete(field.id)}
-                    className="p-2 text-rose-500 hover:bg-rose-500/10 rounded-xl transition-all group"
+                    className="p-2 text-error hover:bg-error/10 rounded-xl transition-all group"
                     title="Terminate Module"
                 >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -65,7 +65,7 @@ const FieldEditor = ({ field, onUpdate, onDelete }) => {
                                 type="checkbox"
                                 {...register('required')}
                                 id="required"
-                                className="peer appearance-none h-5 w-5 bg-slate-950/50 border border-slate-800 rounded-lg checked:border-primary-500 checked:bg-primary-500/10 cursor-pointer transition-all"
+                                className="peer appearance-none h-5 w-5 bg-slate-900/50 border border-slate-800 rounded-lg checked:border-primary-500 checked:bg-primary-500/10 cursor-pointer transition-all"
                                 onChange={(e) => {
                                     register('required').onChange(e);
                                     handleSubmit(onSubmit)();
@@ -91,7 +91,7 @@ const FieldEditor = ({ field, onUpdate, onDelete }) => {
                         <input
                             type="text"
                             {...register('config.placeholder')}
-                            className="input-field !py-3.5 !text-xs font-mono font-bold !bg-slate-950/30"
+                            className="input-field !py-3.5 !text-xs font-mono font-bold !bg-slate-900/30"
                             onBlur={handleSubmit(onSubmit)}
                             placeholder="Awaiting input..."
                         />
@@ -102,7 +102,7 @@ const FieldEditor = ({ field, onUpdate, onDelete }) => {
                         <input
                             type="text"
                             {...register('config.helpText')}
-                            className="input-field !py-3.5 !text-xs font-mono font-bold !bg-slate-950/30"
+                            className="input-field !py-3.5 !text-xs font-mono font-bold !bg-slate-900/30"
                             onBlur={handleSubmit(onSubmit)}
                             placeholder="// Descriptive metadata"
                         />
@@ -113,7 +113,7 @@ const FieldEditor = ({ field, onUpdate, onDelete }) => {
                         <div className="animate-in fade-in slide-in-from-top-2 duration-300">
                             <label className="block text-[9px] font-black text-slate-600 uppercase tracking-widest mb-2 font-mono ml-1">PARAM_OPTIONS_LIST</label>
                             <textarea
-                                className="input-field !py-4 h-32 resize-none !text-xs font-mono font-bold !bg-slate-950/30"
+                                className="input-field !py-4 h-32 resize-none !text-xs font-mono font-bold !bg-slate-900/30"
                                 placeholder="Alpha&#10;Beta&#10;Gamma"
                                 defaultValue={field.config?.options?.map(o => o.label).join('\n')}
                                 onBlur={(e) => {
@@ -134,7 +134,7 @@ const FieldEditor = ({ field, onUpdate, onDelete }) => {
                                 <input
                                     type="number"
                                     {...register('config.min')}
-                                    className="input-field !py-3.5 !text-xs font-mono font-bold !bg-slate-950/30"
+                                    className="input-field !py-3.5 !text-xs font-mono font-bold !bg-slate-900/30"
                                     onBlur={handleSubmit(onSubmit)}
                                 />
                             </div>
@@ -143,7 +143,7 @@ const FieldEditor = ({ field, onUpdate, onDelete }) => {
                                 <input
                                     type="number"
                                     {...register('config.max')}
-                                    className="input-field !py-3.5 !text-xs font-mono font-bold !bg-slate-950/30"
+                                    className="input-field !py-3.5 !text-xs font-mono font-bold !bg-slate-900/30"
                                     onBlur={handleSubmit(onSubmit)}
                                 />
                             </div>

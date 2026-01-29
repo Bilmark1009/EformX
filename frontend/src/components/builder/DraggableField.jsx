@@ -24,9 +24,9 @@ const DraggableField = ({ field, isSelected, onClick }) => {
             ref={setNodeRef}
             style={style}
             onClick={onClick}
-            className={`group relative p-6 glass-card tech-border !bg-slate-900/60 cursor-pointer transition-all duration-300 ${isSelected
+            className={`group relative p-6 glass-card tech-border !bg-slate-800/60 cursor-pointer transition-all duration-300 ${isSelected
                 ? '!border-primary-500 shadow-glow shadow-primary-500/20 translate-x-2'
-                : 'hover:!bg-slate-900/80 hover:border-slate-700'
+                : 'hover:!bg-slate-800/80 hover:border-slate-700'
                 } ${isDragging ? 'shadow-2xl ring-2 ring-primary-500/50' : ''}`}
         >
             {/* Drag Handle - Industrial Gripper */}

@@ -154,17 +154,17 @@ const Dashboard = () => {
             >
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Form Title</label>
+                        <label className="block text-sm font-bold text-slate-400 mb-2 ml-1 uppercase tracking-widest text-[10px]">Form Title</label>
                         <input
                             type="text"
                             {...register('title', { required: 'Title is required' })}
-                            className={`input-field ${errors.title ? 'border-red-500' : ''}`}
+                            className={`input-field ${errors.title ? 'border-error' : ''}`}
                             placeholder="e.g., Customer Satisfaction Survey"
                         />
-                        {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
+                        {errors.title && <p className="text-error text-xs mt-2 ml-1 font-bold italic">{errors.title.message}</p>}
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Description (Optional)</label>
+                        <label className="block text-sm font-bold text-slate-400 mb-2 ml-1 uppercase tracking-widest text-[10px]">Description (Optional)</label>
                         <textarea
                             {...register('description')}
                             className="input-field resize-none h-24"
