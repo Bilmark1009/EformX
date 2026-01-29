@@ -98,4 +98,33 @@ class ResponseController extends Controller
             "Expires" => "0"
         ]);
     }
+
+    public function stats(Form $form)
+    {
+        if ($form->user_id !== Auth::id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        // Get count of responses per day for the last 14 days
+        $stats = $form->responses()
+            ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->where('created_at', '>=', now()->subDays(14))
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get();
+
+        // Fill in missing days with 0
+        $data = [];
+        for ($i = 13; $i >= 0; $i--) {
+            $date = now()->subDays($i)->format('Y-m-d');
+            $stat = $stats->firstWhere('date', $date);
+            $data[] = [
+                'date' => $date,
+                'count' => $stat ? $stat->count : 0,
+                'label' => now()->subDays($i)->format('D d'),
+            ];
+        }
+
+        return response()->json($data);
+    }
 }
